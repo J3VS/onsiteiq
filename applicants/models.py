@@ -1,7 +1,7 @@
 from django.db import models
 
 from onsiteiq.models import BaseModel
-from auth.models import User
+from authentication.models import User
 from django.contrib.auth.models import Permission
 
 

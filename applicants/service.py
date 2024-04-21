@@ -3,15 +3,15 @@ from datetime import datetime
 from applicants.data import Applicant
 from applicants.exceptions import ApplicantNotFound
 from applicants.models import ApplicantModel, Status, ApplicantNoteModel
-from auth.models import User
+from authentication.models import User
 
 
 class ApplicantService:
     @staticmethod
     def create_applicant(applicant: Applicant) -> str:
-        model = ApplicantModel(first_name=applicant.first_name,
-                               last_name=applicant.last_name,
-                               email=applicant.last_name)
+        model = ApplicantModel(first_name=applicant['first_name'],
+                               last_name=applicant['last_name'],
+                               email=applicant['last_name'])
         model.save()
         return model.pk
 
@@ -19,10 +19,10 @@ class ApplicantService:
     def get_applicant(applicant_id: str) -> Applicant:
         try:
             applicant_model = ApplicantModel.objects.get(pk=applicant_id)
-            return Applicant(first_name=applicant_model,
+            return Applicant(first_name=applicant_model.first_name,
                              last_name=applicant_model.last_name,
                              email=applicant_model.email,
-                             status=ApplicantModel.status)
+                             status=applicant_model.status)
         except ApplicantModel.DoesNotExist:
             raise ApplicantNotFound()
 

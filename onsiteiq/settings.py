@@ -11,9 +11,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
     'onsiteiq',
     'applicants',
-    'auth'
+    'authentication'
 ]
 
 MIDDLEWARE = [
@@ -37,7 +38,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
+                'django.contrib.auth.context_processors.authentication',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -66,3 +67,10 @@ TIME_ZONE = 'UTC'
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'authentication.User'
+
+SECRET_KEY = 'g*nrz-kclyonbn!wb$s4c(qu&ny)v@tolrn87)l67(4vk%*7x^'
+
+NOSE_ARGS = ['--nocapture',
+             '--nologcapture',]
