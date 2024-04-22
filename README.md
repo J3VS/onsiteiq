@@ -18,7 +18,7 @@ docker-compose up -d
 ```
 
 ### Existing users
-Created with a management command as part of the docker build
+The following users are automatically created using a management command as part of the docker build, they have varying permissions per the groups they are assigned to, they can be used to login and interact with applicants
 
 | Username    | Password    | Permissions                             |
 |-------------|-------------|-----------------------------------------|
