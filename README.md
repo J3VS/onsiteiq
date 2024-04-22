@@ -1,12 +1,31 @@
 ## OnSiteIQ Django API
 
-To run
+### Sanity Checks
+Create virtual env (with pyenv or other)
+```commandline
+pip install -r requirements.txt
+```
+Check linting/formatting/types with
+```commandline
+python -m black .
+flake8 .
+mypy .
+```
+
+### Run tests
+with a local psql running on port 9432 (I meant to dockerize this, but ran out of time)
+```commandline
+./manage.py test
+```
+
+### Run app
 ```commandline
 docker-compose build
 docker-compose up -d
 ```
 
 ### Existing users
+Created with a management command as part of the docker build
 
 | Username    | Password    | Permissions                             |
 |-------------|-------------|-----------------------------------------|

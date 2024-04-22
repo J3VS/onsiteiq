@@ -47,7 +47,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "onsiteiq.wsgi.application"
 
-DATABASES = {"default": {"ENGINE": "django.db.backends.postgresql"}}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": "localhost",
+        "PORT": "9432",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+    }
+}
 
 
 REST_FRAMEWORK = {

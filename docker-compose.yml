@@ -13,7 +13,7 @@ services:
     stdin_open: true
     tty: true
     build: .
-    command: python manage.py runserver 0.0.0.0:8654
+    command: python manage.py migrate && python manage.py create_users_and_groups && python manage.py runserver 0.0.0.0:8654
     volumes:
       - .:/code
     ports:
