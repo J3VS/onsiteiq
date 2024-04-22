@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -50,18 +51,17 @@ WSGI_APPLICATION = "onsiteiq.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": "localhost",
-        "PORT": "9432",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
+        "HOST": os.environ.get("POSTGRES_HOST"),
+        "NAME": os.environ.get("POSTGRES_NAME"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
     }
 }
 
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",  # Add this line
+        "rest_framework.authentication.TokenAuthentication",
     ],
 }
 

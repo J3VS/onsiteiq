@@ -13,14 +13,31 @@ services:
     stdin_open: true
     tty: true
     build: .
-    command: python manage.py migrate && python manage.py create_users_and_groups && python manage.py runserver 0.0.0.0:8654
+    command: bash -c "python manage.py migrate && python manage.py create_users_and_groups && python manage.py runserver 0.0.0.0:8654"
     volumes:
       - .:/code
     ports:
       - "8654:8654"
     environment:
+      - POSTGRES_HOST=db
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
+
+  test:
+    stdin_open: true
+    tty: true
+    build: .
+    command: bash -c "black . && flake8 . && mypy . && ./manage.py test"
+    volumes:
+      - .:/code
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
+    profiles: ['test']

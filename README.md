@@ -1,26 +1,19 @@
 ## OnSiteIQ Django API
 
-### Sanity Checks
-Create virtual env (with pyenv or other)
-```commandline
-pip install -r requirements.txt
-```
-Check linting/formatting/types with
-```commandline
-black .
-flake8 .
-mypy .
-```
-
 ### Run tests
-with a local psql running on port 9432 (I meant to dockerize this, but ran out of time)
-```commandline
-./manage.py test
+Run the sanity checks, including 
+- Black formatting
+- flake8 linting
+- mypy type checking
+- unit tests
+with the test profile
+```
+docker-compose up test
 ```
 
 ### Run app
+Run the app with no profile specified
 ```commandline
-docker-compose build
 docker-compose up -d
 ```
 
@@ -36,19 +29,32 @@ Created with a management command as part of the docker build
 
 
 ### Authenticate with a User with
+##### Request
 ```
-POST localhost:8654/authenticate/login
+POST localhost:8654/authenticate/login/
 {
   "username": <username>,
   "password": <password>
 }
 ```
+##### Response
+```
+{
+    "token": <token>
+}
+```
 
 ### Interact with applicants
-#### Create applicant
-#### Request
+The following endpoints use TokenAuthentication, so the header
 ```
-POST localhost:8654/applicants/create
+Authorization: Token <token>
+```
+will need to be added using the token from the authentication/login/ response
+
+#### Create applicant
+##### Request
+```
+POST localhost:8654/applicants/
 {
     "first_name": <first_name>, // required, less than 50 chars
     "last_name": <last_name>, // required, less than 50 chars
@@ -65,7 +71,7 @@ POST localhost:8654/applicants/create
 #### View applicant
 #### Request
 ```
-GET localhost:8654/applicants/<applicant_id>
+GET localhost:8654/applicants/<applicant_id>/
 ```
 #### Response
 ```
@@ -85,19 +91,19 @@ GET localhost:8654/applicants/<applicant_id>
 ### Approve applicant
 #### Request
 ```
-POST localhost:8654/applicants/<applicant_id>/approve
+POST localhost:8654/applicants/<applicant_id>/approve/
 ```
 
 ### Reject applicant
 #### Request
 ```
-POST localhost:8654/applicants/<applicant_id>/reject
+POST localhost:8654/applicants/<applicant_id>/reject/
 ```
 
 ### Add applicant note
 #### Request
 ```
-POST localhost:8654/applicants/<applicant_id>/notes
+POST localhost:8654/applicants/<applicant_id>/notes/
 {
     "text": <note_text>" //required, no blank allowed
 }
