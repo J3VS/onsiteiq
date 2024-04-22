@@ -7,7 +7,7 @@ pip install -r requirements.txt
 ```
 Check linting/formatting/types with
 ```commandline
-python -m black .
+black .
 flake8 .
 mypy .
 ```
