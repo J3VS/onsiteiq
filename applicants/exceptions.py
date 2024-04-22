@@ -1,4 +1,2 @@
-
-
 class ApplicantNotFound(Exception):
     pass

@@ -2,7 +2,6 @@ from django.db import models
 
 from onsiteiq.models import BaseModel
 from authentication.models import User
-from django.contrib.auth.models import Permission
 
 
 class Status:
@@ -13,9 +12,9 @@ class Status:
 
 class ApplicantModel(BaseModel):
     STATUSES = {
-        Status.PENDING: 'Pending',
-        Status.APPROVED: 'Approved',
-        Status.REJECTED: 'Rejected'
+        Status.PENDING: "Pending",
+        Status.APPROVED: "Approved",
+        Status.REJECTED: "Rejected",
     }
 
     first_name = models.CharField(max_length=30)
@@ -26,7 +25,7 @@ class ApplicantModel(BaseModel):
     class Meta:
         permissions = [
             ("can_add_applicant", "Can create an applicant"),
-            ("can_view_applicants", "Can view applicants"),
+            ("can_view_applicant", "Can view an applicant"),
             ("can_change_applicant_status", "Can approve or reject applicants"),
             ("can_add_applicant_note", "Can add notes to applicants"),
         ]

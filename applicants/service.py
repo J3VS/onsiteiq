@@ -1,17 +1,18 @@
-from datetime import datetime
-
 from applicants.data import Applicant
 from applicants.exceptions import ApplicantNotFound
 from applicants.models import ApplicantModel, Status, ApplicantNoteModel
 from authentication.models import User
+from onsiteiq.time import now
 
 
 class ApplicantService:
     @staticmethod
     def create_applicant(applicant: Applicant) -> str:
-        model = ApplicantModel(first_name=applicant['first_name'],
-                               last_name=applicant['last_name'],
-                               email=applicant['last_name'])
+        model = ApplicantModel(
+            first_name=applicant["first_name"],
+            last_name=applicant["last_name"],
+            email=applicant["last_name"],
+        )
         model.save()
         return model.pk
 
@@ -19,10 +20,10 @@ class ApplicantService:
     def get_applicant(applicant_id: str) -> Applicant:
         try:
             applicant_model = ApplicantModel.objects.get(pk=applicant_id)
-            return Applicant(first_name=applicant_model.first_name,
-                             last_name=applicant_model.last_name,
-                             email=applicant_model.email,
-                             status=applicant_model.status)
+            applicant_notes = ApplicantNoteModel.objects.filter(
+                applicant_id=applicant_model.pk
+            )
+            return Applicant.make_from(applicant_model, applicant_notes)
         except ApplicantModel.DoesNotExist:
             raise ApplicantNotFound()
 
@@ -47,10 +48,9 @@ class ApplicantService:
     def add_note(applicant_id: str, note: str, user: User):
         try:
             applicant_model = ApplicantModel.objects.get(pk=applicant_id)
-            applicant_note = ApplicantNoteModel(applicant=applicant_model,
-                                                note=note,
-                                                user=user,
-                                                created=datetime.now())
+            applicant_note = ApplicantNoteModel(
+                applicant=applicant_model, note=note, user=user, created=now()
+            )
             applicant_note.save()
             return applicant_note.pk
         except ApplicantModel.DoesNotExist:

@@ -1,8 +1,14 @@
 from django.urls import path
 
-from applicants.views import create_applicant, view_applicant, approve_applicant, reject_applicant, add_applicant_note
+from applicants.views import (
+    create_applicant,
+    view_applicant,
+    approve_applicant,
+    reject_applicant,
+    add_applicant_note,
+)
 
-app_name = 'applicants'
+app_name = "applicants"
 
 urlpatterns = [
     path("", create_applicant, name="create-applicant"),

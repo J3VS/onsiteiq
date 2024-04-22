@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
             options={
                 "permissions": [
                     ("can_add_applicant", "Can create an applicant"),
-                    ("can_view_applicants", "Can view applicants"),
+                    ("can_view_applicant", "Can view an applicant"),
                     ("can_change_applicant_status", "Can approve or reject applicants"),
                     ("can_add_applicant_note", "Can add notes to applicants"),
                 ],
