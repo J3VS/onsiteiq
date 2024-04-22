@@ -7,11 +7,11 @@ from onsiteiq.time import now
 
 class ApplicantService:
     @staticmethod
-    def create_applicant(applicant: Applicant) -> str:
+    def create_applicant(first_name: str, last_name: str, email: str) -> str:
         model = ApplicantModel(
-            first_name=applicant["first_name"],
-            last_name=applicant["last_name"],
-            email=applicant["last_name"],
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
         )
         model.save()
         return model.pk
@@ -36,7 +36,7 @@ class ApplicantService:
         ApplicantService.set_status(applicant_id, Status.REJECTED)
 
     @staticmethod
-    def set_status(applicant_id: str, status: Status):
+    def set_status(applicant_id: str, status: int):
         try:
             applicant_model = ApplicantModel.objects.get(pk=applicant_id)
             applicant_model.status = status

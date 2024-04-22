@@ -1,10 +1,8 @@
 from dataclasses import asdict
-
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
-
 from applicants.exceptions import ApplicantNotFound
 from applicants.permissions import (
     AddApplicantPermission,
@@ -14,7 +12,6 @@ from applicants.permissions import (
 )
 from applicants.serializers import ApplicantSerializer, ApplicantNoteSerializer
 from applicants.service import ApplicantService
-
 from rest_framework import status
 
 
@@ -28,7 +25,7 @@ def create_applicant(request: Request, format=None):
         )
 
     applicant = applicant_serializer.validated_data
-    applicant_id: str = ApplicantService.create_applicant(applicant)
+    applicant_id: str = ApplicantService.create_applicant(**applicant)
     return Response({"applicant_id": applicant_id})
 
 

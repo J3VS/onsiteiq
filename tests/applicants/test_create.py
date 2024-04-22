@@ -3,6 +3,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from applicants.models import ApplicantModel
 from tests.test_utils import AuthenticatedTestCase
 
 
@@ -72,11 +73,21 @@ class PermittedCreateApplicantTests(AuthenticatedTestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_applicant(self):
+        first_name = "ben"
+        last_name = "applicant"
+        email = "ben.applicant@email.com"
         data = {
-            "first_name": "test",
-            "last_name": "applicant",
-            "email": "test.applicant@email.com",
+            "first_name": first_name,
+            "last_name": last_name,
+            "email": email,
         }
         response = self.post("applicants:create-applicant", data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIsNotNone(response.data["applicant_id"])
+        applicant_id = response.data["applicant_id"]
+        self.assertIsNotNone(applicant_id)
+
+        applicant = ApplicantModel.objects.get(pk=applicant_id)
+        self.assertEquals(applicant.first_name, first_name)
+        self.assertEquals(applicant.last_name, last_name)
+        self.assertEquals(applicant.email, email)
+        self.assertEquals(ApplicantModel.STATUSES[applicant.status], "Pending")

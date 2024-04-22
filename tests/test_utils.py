@@ -1,3 +1,5 @@
+from typing import Optional, Any
+
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from datetime import datetime, timedelta
@@ -45,14 +47,18 @@ class AuthenticatedTestCase(APITestCase):
     def headers(self):
         return {"Authorization": f"Token {self.token}"}
 
-    def get(self, url_name: str, url_args: list[str] = None):
+    def get(self, url_name: str, url_args: Optional[list[str]] = None):
         url = reverse(url_name, args=url_args)
         return self.client.get(url, format="json", headers=self.headers())
 
-    def post(self, url_name: str, data: dict[str, any], url_args: list[str] = None):
+    def post(
+        self, url_name: str, data: dict[str, Any], url_args: Optional[list[str]] = None
+    ):
         url = reverse(url_name, args=url_args)
         return self.client.post(url, data, format="json", headers=self.headers())
 
-    def put(self, url_name: str, data: dict[str, any], url_args: list[str] = None):
+    def put(
+        self, url_name: str, data: dict[str, Any], url_args: Optional[list[str]] = None
+    ):
         url = reverse(url_name, args=url_args)
         return self.client.put(url, data, format="json", headers=self.headers())
