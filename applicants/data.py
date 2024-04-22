@@ -30,11 +30,12 @@ class Applicant:
 
     @staticmethod
     def make_from(applicant: ApplicantModel, notes: list[ApplicantNoteModel]):
+        sorted_notes = sorted(notes, key=lambda n: n.created)
         return Applicant(
             id=applicant.pk,
             first_name=applicant.first_name,
             last_name=applicant.last_name,
             email=applicant.email,
             status=ApplicantModel.STATUSES[applicant.status],
-            notes=[Note.make_from(note) for note in notes],
+            notes=[Note.make_from(note) for note in sorted_notes],
         )

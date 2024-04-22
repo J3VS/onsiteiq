@@ -5,3 +5,5 @@ WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY . /code/
+RUN code/manage.py migrate
+RUN code/manage.py create_users_and_groups
